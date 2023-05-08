@@ -6,19 +6,6 @@ formField.addEventListener('submit', onSubmitForm);
 
 function onSubmitForm(evt) {
   evt.preventDefault();
-
-  let delay = Number(formField.delay.value);
-
-  for (let i = 1; i <= formField.amount.value; i += 1) {
-    createPromise(i, delay)
-      .then(({ position, delay }) => {
-        Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
-      })
-      .catch(({ position, delay }) => {
-        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
-      });
-    delay += Number(formField.step.value)
-  }
 }
 
 function createPromise(position, delay) {
@@ -35,3 +22,11 @@ function createPromise(position, delay) {
     }, delay);
   });
 }
+
+createPromise(position, delay)
+  .then(({ position, delay }) => {
+    Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+  })
+  .catch(({ position, delay }) => {
+    Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+  });
